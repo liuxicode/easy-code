@@ -2,6 +2,8 @@ package com.liuxi.code.easycode.controller;
 
 import com.liuxi.code.easycode.dao.User;
 import com.liuxi.code.easycode.service.TestService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("test")
 public class TestController {
+
+    private static Logger logger = LoggerFactory.getLogger(TestController.class);
 
     @Autowired
     private TestService testService;
@@ -44,7 +48,11 @@ public class TestController {
     @GetMapping("testDaoSupportQuery")
     public Object testDaoSupportQuery() throws Exception{
 
-        return testService.testDaoSupportQuery();
+        Object o = testService.testDaoSupportQuery();
+
+        logger.info("testDaoSupportQuery:{}",o);
+
+        return o;
     }
 
 
