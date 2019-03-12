@@ -31,7 +31,23 @@
 //    private JdbcTemplate jdbcTemplate;
 //
 //    /**
-//     * insert
+//     * insertTableList
+//     * @param table 表名
+//     * @param list Map<String,Object>对象或者Object对象
+//     *          （对象属性 和 Map Key遵循 下划线-驼峰原则,对象类型统一使用包装类,不使用基本数据类型,为了统一判空）
+//     * @return
+//     */
+//    public <T> int insertTableList(String table, List<T> list) throws Exception {
+//
+//        for (T o : list) {
+//            insertTable(table,o);
+//        }
+//
+//        return 1;
+//    }
+//
+//    /**
+//     * insertTable
 //     * @param table 表名
 //     * @param o Map<String,Object>对象或者Object对象
 //     *          （对象属性 和 Map Key遵循 下划线-驼峰原则,对象类型统一使用包装类,不使用基本数据类型,为了统一判空）
@@ -54,7 +70,7 @@
 //                Object value = entryMap.getValue();
 //
 //                if(key != null && value != null){
-//                    cloums.add(underscoreName(key));
+//                    cloums.add("`"+underscoreName(key)+"`");
 //                    cloumValues.add("?");
 //                    params.add(value);
 //                }
@@ -73,7 +89,7 @@
 //                    Object value = m.invoke(o);
 //
 //                    if(value != null){
-//                        cloums.add(underscoreName(name));
+//                        cloums.add("`"+underscoreName(name)+"`");
 //                        cloumValues.add("?");
 //                        params.add(value);
 //                    }
@@ -117,7 +133,7 @@
 //                Object value = entryMap.getValue();
 //
 //                if(key != null && value != null){
-//                    cloums.add(underscoreName(key) + "= ?");
+//                    cloums.add("`"+underscoreName(key) + "` = ?");
 //                    datas.add(value);
 //                }
 //            }
@@ -135,7 +151,7 @@
 //                    Object value = m.invoke(o);
 //
 //                    if(value != null){
-//                        cloums.add(underscoreName(name)+"= ?");
+//                        cloums.add("`"+underscoreName(name)+"` = ?");
 //                        datas.add(value);
 //                    }
 //
@@ -155,6 +171,10 @@
 //
 //        return jdbcTemplate.update(sql,datas.toArray());
 //
+//    }
+//
+//    public int execute(String sql, Object... args){
+//        return jdbcTemplate.update(sql,args);
 //    }
 //
 //    public <T> T queryForObject(String sql, @Nullable Object[] args, RowMapper<T> rowMapper){
